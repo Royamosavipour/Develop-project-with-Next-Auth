@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 function Index() {
+  const router=useRouter()
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,7 +13,12 @@ function Index() {
     const res = await signIn("credentials", {
       identifier,
       password,
+      redirect:false
     });
+
+    if (res.status===200) {
+      router.replace('/dashbord')
+    }
   };
 
   return (
